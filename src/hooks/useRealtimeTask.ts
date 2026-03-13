@@ -4,7 +4,7 @@ import { taskService } from '../services/taskService'
 import type { Tarea, TareaInsert, TareaUpdate} from '../types/database'
 import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js'
 
-export function useRealtimeTask(){
+export function useRealtimeTasks(){
     const [tareas, setTareas] = useState<Tarea[]>([])
     const [loading, setLoading] = useState(true)
     const [conectado, setConectado] = useState(false)

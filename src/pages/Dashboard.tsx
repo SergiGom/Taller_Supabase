@@ -22,7 +22,7 @@ export function Dashboard() {
       <div style={{ display:'flex', justifyContent:'space-between',
         alignItems:'center', marginBottom:'2rem' }}>
         <div>
-          <h1 style={{ margin:0 }}>📊 Dashboard</h1>
+          <h1 style={{ margin:0, color:'white' }}>📊 Dashboard</h1>
           {lastUpdated && (
             <p style={{ margin:0, fontSize:'0.8rem', color:'#94a3b8' }}>
               Actualizado: {lastUpdated.toLocaleTimeString('es-CO')}
@@ -32,7 +32,7 @@ export function Dashboard() {
         </div>
         <button onClick={refresh}
           style={{ padding:'0.5rem 1rem', borderRadius:'8px', cursor:'pointer',
-            border:'1px solid #e2e8f0', background:'white' }}>
+            border:'1px solid #334155', background:'#1e293b', color:'white' }}>
           🔄 Actualizar
         </button>
       </div>
@@ -62,7 +62,7 @@ export function Dashboard() {
           boxShadow:'0 2px 8px rgba(0,0,0,0.06)' }}>
           <div style={{ display:'flex', justifyContent:'space-between',
             marginBottom:'0.5rem' }}>
-            <span style={{ fontWeight:600 }}>Progreso global</span>
+            <span style={{ fontWeight:600, color:'#1e293b' }}>Progreso global</span>
             <span style={{ fontWeight:800, color:'#10b981' }}>
               {stats.porcentaje}%
             </span>
@@ -79,12 +79,11 @@ export function Dashboard() {
       )}
 
       {/* —— Gráficas —— */}
-      <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr',
-        gap:'1.5rem', marginBottom:'2rem' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'3fr 2fr',
+        gap:'1.5rem', marginBottom:'2rem', alignItems:'stretch' }}>
         <TaskChart  data={activity} />
         <DonutChart data={distribution} />
       </div>
-
       {/* —— Feed de actividad —— */}
       <ActivityFeed tareas={recentFeed} />
     </div>

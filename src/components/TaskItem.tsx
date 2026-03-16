@@ -1,14 +1,13 @@
 import { useState } from "react";
-import type { Tarea} from "../types/database";
+import type { Tarea } from "../types/database";
 
 interface Props {
     tarea: Tarea
-    onActualizar:(id: string, completada: boolean) => Promise<void>
-    onEliminar: (id:string) => Promise<void>
+    onActualizar: (id: string, completada: boolean) => Promise<void>
+    onEliminar: (id: string) => Promise<void>
 }
 
-
-export function TaskItem ({ tarea, onActualizar, onEliminar}: Props){
+export function TaskItem({ tarea, onActualizar, onEliminar }: Props) {
     const [eliminado, setEliminado] = useState(false)
 
     const handleEliminar = async () => {
@@ -18,26 +17,28 @@ export function TaskItem ({ tarea, onActualizar, onEliminar}: Props){
     }
 
     return (
-        <div style={{display: 'flex', gap: '1rem', alignItems: 'center',
-            padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '8px',
-            marginBottom: '0.5rme', opacity: eliminado ? 0.5: 1 }}>
+        <div style={{ display:'flex', gap:'1rem', alignItems:'center',
+            padding:'1rem', border:'1px solid #000000', borderRadius:'15px',
+            marginBottom:'0.75rem', opacity: eliminado ? 0.5 : 1,
+            backgroundColor:'#ffffff' }}>
             <input type='checkbox' checked={tarea.completada}
-            onChange={() => onActualizar(tarea.id, !tarea.completada)}/>
-            <div style={{ flex: 1 }}>
+                onChange={() => onActualizar(tarea.id, !tarea.completada)}
+                style={{ width:'1.2rem', height:'1.2rem', cursor:'pointer' }} />
+            <div style={{ flex:1 }}>
                 <strong style={{
                     textDecoration: tarea.completada ? 'line-through' : 'none',
-                    color: tarea.completada ? '#94a3b8' : '#1a1a1a'}}>
-                        {tarea.titulo}
-                    </strong>
-                    {tarea.descripcion && (
-                        <p style={{margin:0, color: '#64748b', fontSize:'0.9rem'}}>
-                            {tarea.descripcion}
-                        </p>
-                    )}
+                    color: tarea.completada ? '#a82200' : 'black' }}>
+                    {tarea.titulo}
+                </strong>
+                {tarea.descripcion && (
+                    <p style={{ margin:0, color:'#000000', fontSize:'0.9rem' }}>
+                        {tarea.descripcion}
+                    </p>
+                )}
             </div>
             <button onClick={handleEliminar} disabled={eliminado}
-            style={{ color:'red', cursor:'pointer', background:'none', border:'none'               
-            }}>
+                style={{ color:'#ef4444', cursor:'pointer',
+                    background:'none', border:'none', fontSize:'0.9rem' }}>
                 Eliminar
             </button>
         </div>

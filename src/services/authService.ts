@@ -7,7 +7,7 @@ export const authService = {
         supabase.auth.getUser(),
 
     signUp: (email: string, password: string) =>
-        supabase.auth.signInWithPassword({ email, password}),
+        supabase.auth.signUp({ email, password}),
 
     signIn: (email: string, password: string) =>
         supabase.auth.signInWithPassword({email, password}),

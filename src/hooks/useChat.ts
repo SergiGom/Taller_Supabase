@@ -1,29 +1,64 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+// src/hooks/useChat.ts
+import { useState, useEffect, useRef } from 'react'
+import { supabase } from '../lib/supabaseClient'
+import type { RealtimeChannel } from '@supabase/supabase-js'
 
-interface Mensaje {id: string; texto: string; usuario: string; hora: string}
+interface Mensaje { 
+  id: string
+  texto: string
+  usuario: string
+  email: string
+  hora: string 
+}
 
-export function useChat(sala: string){
-    const [mensajes, setMensajes] = useState<Mensaje[]>([])
+export function useChat(sala: string) {
+  const [mensajes, setMensajes] = useState<Mensaje[]>([])
+  const channelRef = useRef<RealtimeChannel | null>(null)
 
-    useEffect (() =>{
-        const channel = supabase
-        .channel(sala)
-        .on ('broadcast', {event: 'mensaje'}, ({ payload}) =>{
-            setMensajes(prev => [...prev, payload as Mensaje])
-        })
-        .subscribe()
-        return () => { supabase.removeChannel(channel)}
-    }, [sala])
+  useEffect(() => {
+    // Limpiar mensajes al cambiar de sala
+    setMensajes([])
 
+    // Crear canal con configuracion de self-broadcast
+    const channel = supabase.channel(sala, {
+      config: {
+        broadcast: { self: true }
+      }
+    })
 
-    const enviarMensaje = async (texto: string, usuario: string) => {
-        const canal = supabase.channel(sala)
-        await canal.send ({ type: 'broadcast', event:'mensaje',payload: {
-            id: crypto.randomUUID(), texto, usuario,
-            hora: new Date().toLocaleTimeString()
-        }})
+    channel
+      .on('broadcast', { event: 'mensaje' }, ({ payload }) => {
+        setMensajes(prev => [...prev, payload as Mensaje])
+      })
+      .subscribe()
+
+    channelRef.current = channel
+
+    return () => { 
+      supabase.removeChannel(channel) 
     }
+  }, [sala])
 
-    return{mensajes, enviarMensaje}
+  const enviarMensaje = async (texto: string, usuario: string, email: string) => {
+    if (!channelRef.current) return
+
+    const mensaje: Mensaje = {
+      id: crypto.randomUUID(),
+      texto,
+      usuario,
+      email,
+      hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+    }
+    
+    await channelRef.current.send({ 
+      type: 'broadcast', 
+      event: 'mensaje', 
+      payload: mensaje
+    })
+  }
+
+  return { mensajes, enviarMensaje }
+
+
+  
 }

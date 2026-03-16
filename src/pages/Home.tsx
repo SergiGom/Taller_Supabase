@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom'
 import { useRealtimeTasks } from '../hooks/useRealtimeTask'
 import { UsePresence } from '../hooks/usePresence'
 import { RealtimeIndicator } from '../components/RealtimeIndicator'
+import { useAuthContext } from '../context/AuthContext'
+
 
 
 export function Home() {
   const { tareas, loading, error, crearTarea, actualizarTarea, eliminarTarea } =
 useTasks()
   const { conectado } = useRealtimeTasks()
-  const { onlineUsers, signOut } = UsePresence('Sala Principal')
+  const { onlineUsers } = UsePresence('sala-principal')
+  const { signOut } = useAuthContext()
 
   if (loading) return <div>Cargando tareas...</div>
   if (error)   return <div style={{ color:'red' }}>Error: {error}</div>

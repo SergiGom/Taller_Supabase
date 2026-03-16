@@ -17,7 +17,7 @@ export type Database = {
       tareas: {
         Row: {
           completada: boolean
-          created_id: string
+          created_at: string
           descripcion: string | null
           id: string
           titulo: string
@@ -25,7 +25,7 @@ export type Database = {
         }
         Insert: {
           completada?: boolean
-          created_id?: string
+          created_at?: string
           descripcion?: string | null
           id?: string
           titulo?: string
@@ -33,7 +33,7 @@ export type Database = {
         }
         Update: {
           completada?: boolean
-          created_id?: string
+          created_at?: string
           descripcion?: string | null
           id?: string
           titulo?: string

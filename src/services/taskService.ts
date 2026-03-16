@@ -1,4 +1,4 @@
-import type { TextAnchor } from "recharts";
+
 import { supabase } from "../lib/supabaseClient";
 import type { TareaInsert, TareaUpdate } from "../types/database";
 
@@ -12,7 +12,7 @@ getAll: () =>
     .select('*')
     .order('created_at', {ascending: false}),
 
-getById: (id: String) =>
+getById: (id: string) =>
     supabase.from('tareas').select('*').eq('id', id).single(),
 
 getByStatus: (completada: boolean)=>
@@ -47,7 +47,7 @@ search: (texto: string)=>
     update: (id: string, cambios: TareaUpdate) =>
         supabase.from('tareas').update(cambios).eq('id', id).select().single(),
 
-    toggleCompletada: (id: String, estadoActual: boolean) =>
+    toggleCompletada: (id: string, estadoActual: boolean) =>
         supabase
         .from('tareas')
         .update({ completada: !estadoActual})

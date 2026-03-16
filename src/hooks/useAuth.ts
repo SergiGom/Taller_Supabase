@@ -3,37 +3,38 @@ import { authService } from "../services/authService"
 import type { User } from '@supabase/supabase-js'
 
 export function useAuth(){
-    const [user, setUser] = useState<User | null>(null)
-    const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
-    useEffect (() => {
-        // Obtener sesion actual al cargal la app
-        authService.getSession().then(({data: {session }}) => {
-            setUser(session?.user ?? null)
-            setLoading(false)
-        })
-        
-        // Escuchar cambios de sesion (login, logout, refresh de token)
-        const { data: { subscription }} = authService.onAuthStateChange(
-            (_event, session) => setUser(session?.user ?? null)
-        )
-        return () => subscription.unsubscribe()
-    }, [])
+  useEffect (() => {
+    // Obtener sesion actual al cargar la app
+    authService.getSession().then(({data: {session }}) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
 
-    const singUp = async (email: string, password: string) =>{
-        const { data, error } = await authService.singUp(email, password)
-        if (error) throw error
-        return data
-    }
-    const singIn = async (email: string, password: string) => {
-        const { data, error } = await authService.singIn(email,password)
-        if (error) throw error
-    }
+    // Escuchar cambios de sesion (login, logout, refresh de token)
+  const { data: { subscription } } = authService.onAuthStateChange(
+    async (_event, session) => { setUser(session?.user ?? null) }
+)
+    return () => subscription.unsubscribe()
+  }, [])
 
-    const singOut = async () => {
-        const { error } = await authService.singOut()
-        if (error) throw error
-    }
+  const signUp = async (email: string, password: string) =>{
+    const { data, error } = await authService.signUp(email, password)
+    if (error) throw error
+    return data
+  }
 
-    return { user, loading, singUp, singIn, singOut}
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await authService.signIn(email, password)
+    if (error) throw error
+  }
+
+  const signOut = async () => {
+    const { error } = await authService.signOut()
+    if (error) throw error
+  }
+
+  return { user, loading, signUp, signIn, signOut }
 }

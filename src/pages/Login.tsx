@@ -3,7 +3,7 @@ import { useNavigate, Link} from 'react-router-dom'
 import { useAuthContext } from "../context/AuthContext";
 
 export function Login(){
-    const { singIn } = useAuthContext()
+    const { signIn } = useAuthContext()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState ('')
@@ -14,7 +14,7 @@ export function Login(){
         e.preventDefault()
         setError(''); setLoading(true)
         try {
-            await singIn (email, password)
+            await signIn (email, password)
             navigate('/')
         } catch (err: any){
             setError (err.message || 'Credenciales Incorrectas')
@@ -34,7 +34,7 @@ export function Login(){
         {loading ? 'Entrando...' : 'Entrar'}
       </button>
     </form>
-    <p>¿No tienes cuenta? <Link to='/register'>Regístrate aquí</Link></p>
+    <p>¿No tienes cuenta? <Link to='/Register'>Regístrate aquí</Link></p>
   </div>
 )
 }

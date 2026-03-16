@@ -6,24 +6,24 @@ export const authService = {
     getUser: () =>
         supabase.auth.getUser(),
 
-    singUp: (email: string, password: string) =>
+    signUp: (email: string, password: string) =>
         supabase.auth.signInWithPassword({ email, password}),
 
-    singIn: (email: string, password: string) =>
+    signIn: (email: string, password: string) =>
         supabase.auth.signInWithPassword({email, password}),
 
     // Login con proveedor OAuth: Google, Github, Discord...
 
-    singInWithProvider: (provider: 'google' | 'github' | 'discord') =>
+    signInWithProvider: (provider: 'google' | 'github' | 'discord') =>
         supabase.auth.signInWithOAuth({
             provider,
             options: { redirectTo: window.location.origin}
         }),
 
-    singInWithMagicLink: (email: string) =>
+    signInWithMagicLink: (email: string) =>
         supabase.auth.signInWithOtp({email}),
 
-    singOut: () =>
+    signOut: () =>
         supabase.auth.signOut(),
 
     updatePassword: (newPassword: string) =>

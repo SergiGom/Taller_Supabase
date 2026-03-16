@@ -29,8 +29,8 @@ export const storageService ={
 
     archivos: {
         // Adjuntar archivo a una tarea - ruta: tareaId/timestamp - nombre
-        upload: {tareaId: String, file: File} => {
-            const path = `${tareaId}/${Date.now()}-${file.name}`
+        upload: (tareaId: String, file: File) => {
+            const path = `${tareaId}/${Date.now()}-${File.name}`
             return supabase.storage.from(ARCHIVOS_BUCKET).upload(path,file)
         },
         list: (tareaId: string) =>
@@ -38,6 +38,6 @@ export const storageService ={
         getSingedUrl: (path: string, expiresIn = 3600) =>
             supabase.storage.from(ARCHIVOS_BUCKET).createSignedUrl(path, expiresIn),
         delete: (path: string) =>
-            supabase.storage.from(ARCHIVOS_BUCKET).remove([path]),
+            supabase.storage.from(ARCHIVOS_BUCKET).remove([path])
     }
 }

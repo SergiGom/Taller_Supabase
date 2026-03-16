@@ -1,4 +1,5 @@
-import { createContext, useContext, ReactNode } from "react"
+import { createContext, useContext } from "react"
+import type { ReactNode } from "react"
 import { useAuth } from "../hooks/useAuth"
 import type { User } from "@supabase/supabase-js"
 
@@ -6,9 +7,9 @@ import type { User } from "@supabase/supabase-js"
 interface AuthContextType {
     user: User | null
     loading: boolean
-    singUp: (email: string, pass: string) => Promise<any>
-    singIn: (email: string, pass: string) => Promise<any>
-    singOut: () => Promise<void> 
+    signUp: (email: string, pass: string) => Promise<any>
+    signIn: (email: string, pass: string) => Promise<any>
+    signOut: () => Promise<void> 
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)

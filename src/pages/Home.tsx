@@ -52,7 +52,7 @@ return (
             ? <p style={{ color:'#000000' }}>No tienes tareas aún. ¡Crea una!</p>
             : tareas.map(t => (
                 <TaskItem key={t.id} tarea={t}
-                  onActualizar={async (id, completada) => { await actualizarTarea(id, { completada }) }}
+                  onActualizar={async (id, cambios) => { await actualizarTarea(id, cambios) }}
                   onEliminar={eliminarTarea}
                 />
               ))

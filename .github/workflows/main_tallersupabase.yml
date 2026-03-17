@@ -12,18 +12,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '24.x'
 
       - name: npm install, build, and test
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL}}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY}}
         run: |
           npm install
           npm run build --if-present
@@ -33,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: ./dist
 
   deploy:
     runs-on: ubuntu-latest

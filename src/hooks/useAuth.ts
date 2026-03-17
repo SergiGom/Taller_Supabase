@@ -29,6 +29,7 @@ export function useAuth(){
   const signIn = async (email: string, password: string) => {
     const { data, error } = await authService.signIn(email, password)
     if (error) throw error
+    return data
   }
 
   const signOut = async () => {

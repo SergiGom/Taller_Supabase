@@ -3,10 +3,13 @@ import { StatCard }       from '../components/Dashboard/StatCard'
 import { TaskChart }      from '../components/Dashboard/TaskChart'
 import { DonutChart }     from '../components/Dashboard/DonutChart'
 import { ActivityFeed }   from '../components/Dashboard/ActivityFeed'
+import { useNavigate } from 'react-router-dom'
 
 export function Dashboard() {
   const { stats, activity, distribution, recentFeed,
           loading, lastUpdated, refresh } = useDashboard()
+
+          const navigate = useNavigate()
 
   if (loading) return (
     <div style={{ display:'flex', justifyContent:'center',
@@ -14,6 +17,8 @@ export function Dashboard() {
       <p>📊 Cargando dashboard...</p>
     </div>
   )
+
+
 
   return (
     <div style={{ padding:'2rem', maxWidth:'1200px', margin:'0 auto' }}>
@@ -34,6 +39,11 @@ export function Dashboard() {
           style={{ padding:'0.5rem 1rem', borderRadius:'8px', cursor:'pointer',
             border:'1px solid #334155', background:'#1e293b', color:'white' }}>
           🔄 Actualizar
+        </button>
+        <button onClick={() => navigate('/home')}
+        style={{ padding:'0.5rem 1rem', borderRadius:'8px', cursor:'pointer',
+        border:'1px solid #334155', background:'#1e293b', color:'white' }}>
+        📋 Volver a Mis Tareas
         </button>
       </div>
 

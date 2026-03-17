@@ -9,11 +9,16 @@ interface Props {
 
 export function TaskItem({ tarea, onActualizar, onEliminar }: Props) {
     const [eliminado, setEliminado] = useState(false)
+    const [actualizado, setActualizado]
 
     const handleEliminar = async () => {
         if (!confirm('¿Eliminar esta tarea?')) return
         setEliminado(true)
         await onEliminar(tarea.id)
+    }
+
+    const handleActualizar = async () => {
+        if(!confirm)
     }
 
     return (
@@ -41,6 +46,7 @@ export function TaskItem({ tarea, onActualizar, onEliminar }: Props) {
                     background:'none', border:'none', fontSize:'0.9rem' }}>
                 Eliminar
             </button>
+            <button onClick={handleActualizar} > </button>
         </div>
     )
 }

@@ -33,7 +33,7 @@ return (
             <button onClick={signOut} style={{
               backgroundColor:'#ef4444', color:'white',
               border:'none', borderRadius:'8px',
-              padding:'0.4rem 1rem', cursor:'pointer' }}>
+              padding:'0.5rem 1.5rem', cursor:'pointer' }}>
               Salir
             </button>
           </div>
